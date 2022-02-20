@@ -4,7 +4,6 @@ specifiers:
   '@cloudflare/workers-types': ^3.4.0
   esbuild: ^0.14.8
   exact-math: ^2.2.3
-  line-reader: ^0.4.0
   miniflare: ^2.1.0
   slshx: ^0.3.0
   tslib: ^2.3.1
@@ -13,7 +12,6 @@ specifiers:
 dependencies:
   '@cloudflare/workers-types': 3.4.0
   exact-math: 2.2.3
-  line-reader: 0.4.0
   slshx: 0.3.0
   tslib: 2.3.1
 
@@ -428,10 +426,6 @@ packages:
     resolution: {integrity: sha512-8QADVssbrFjivHWQU7KkMgptGTl6WAcSdlbBPY4uNF+mWr6DGcKrvY2w4FQJoXch7+fKMjj0dRrL75vk3k23OA==}
     engines: {node: '>=6'}
     dev: true
-
-  /line-reader/0.4.0:
-    resolution: {integrity: sha1-F+RIGNoKwzVnW6MAlU+U72cOZv0=}
-    dev: false
 
   /miniflare/2.2.0:
     resolution: {integrity: sha512-azOKDz9RfyWfDZY4u1k+GaaRuBApfgrRoz99sK/U7ngm0pxL0YRNuHPFSHwezAxw1Oz+KQpwtPClCE0zs7Rqgg==}
