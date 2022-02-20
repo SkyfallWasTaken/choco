@@ -1,0 +1,4 @@
+ignore-failures:
+    javascript:
+      - slshx
+      - exact-math
