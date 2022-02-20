@@ -1,6 +1,6 @@
 {
 	"version": "1.0.0",
-	"name": "slshx-starter",
+	"name": "ninjacord",
 	"dependencies": {
 		"@types/stack-trace": { "version": "0.0.29" },
 		"discord-api-types": { "version": "0.25.2" },
