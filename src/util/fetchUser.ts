@@ -10,3 +10,4 @@ export default async function (id: string, token: string): Promise<User> {
 	if (!response.ok) throw new Error(`Error status code: ${response.status}`);
 	return await response.json();
 }
+ 
