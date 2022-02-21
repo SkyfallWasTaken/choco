@@ -7,6 +7,9 @@ import { prime } from "./math/prime";
 import { avatarUserCommand } from "./userCommands/avatarUserCommand";
 import { createTag } from "./tags/createTag";
 import { readTag } from "./tags/readTag";
+import { deleteTag } from "./tags/deleteTag";
+import { updateTag } from "./tags/updateTag";
+import { expandLinks } from "./messageCommands/expandLinks";
 
 const handler = createHandler({
 	// Replaced by esbuild when bundling, see scripts/build.js (do not edit)
@@ -24,9 +27,14 @@ const handler = createHandler({
 		tag: {
 			create: createTag,
 			view: readTag,
+			delete: deleteTag,
+			update: updateTag,
 		},
 	},
 	userCommands: { "Get User Avatar": avatarUserCommand },
+	messageCommands: { "Expand Links": expandLinks },
 });
 
-export default { fetch: handler };
+export default {
+	fetch: handler,
+};
