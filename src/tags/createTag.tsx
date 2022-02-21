@@ -20,7 +20,13 @@ export function createTag(): CommandHandler<Env> {
 		if (await env.TAGS.get(tagKey))
 			return <Message>Tag {tagName} already exists!</Message>;
 		try {
-			await env.TAGS.put(tagKey, contentValue);
+			await env.TAGS.put(
+				tagKey,
+				JSON.stringify({
+					content: contentValue,
+					author: interaction.member!.user.id,
+				})
+			);
 			return (
 				<Message>
 					Successfully created tag! Check it out with `/tag view{" "}
