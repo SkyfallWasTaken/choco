@@ -3,4 +3,6 @@ interface Env {
 	// KV_NAMESPACE: KVNamespace;
 	// DURABLE_OBJECT: DurableObjectNamespace;
 	// SECRET: string;
+
+	BOT_TOKEN: string;
 }
