@@ -3,8 +3,10 @@ import {
 	useDescription,
 	useString,
 	Message,
+	Button,
 	createElement,
 } from "slshx";
+import fetchUser from "../util/fetchUser";
 
 export function readTag(): CommandHandler<Env> {
 	useDescription("View a tag");
@@ -13,14 +15,27 @@ export function readTag(): CommandHandler<Env> {
 	});
 
 	return async (interaction, env) => {
-		const tagContent = await env.TAGS.get(
+		const rawTag = await env.TAGS.get(
 			`${interaction.guild_id}::${tagName.toLowerCase()}`
 		);
 
-		if (!tagContent) {
+		if (!rawTag) {
 			return <Message>Tag `{tagName}` does not exist.</Message>;
 		}
 
-		return <Message>{tagContent}</Message>;
+		const tagObject = JSON.parse(rawTag);
+
+		const { username, discriminator } = await fetchUser(
+			interaction.member!.user.id,
+			env.BOT_TOKEN
+		);
+		return (
+			<Message allowedMentions={{ parse: [] }}>
+				{tagObject.content}
+				<Button id="fakebutton" primary disabled>
+					Author: {username}#{discriminator}
+				</Button>
+			</Message>
+		);
 	};
 }
