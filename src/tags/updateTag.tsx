@@ -28,10 +28,9 @@ export function updateTag(): CommandHandler<Env> {
 				<Message ephemeral>You are not the owner of this tag!</Message>
 			);
 
-		const newTag = tagObject;
-		newTag.content = contentValue;
+		tagObject.content = contentValue; // saves an allocation
 
-		await env.TAGS.put(tagKey, JSON.stringify(newTag));
+		await env.TAGS.put(tagKey, JSON.stringify(tagObject));
 
 		return () => {
 			<Message>Updated tag!</Message>;
