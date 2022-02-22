@@ -77,9 +77,8 @@ await build({
 	logLevel: "info",
 	bundle: true,
 	sourcemap: true,
+	minify: true,
 	jsxFactory: "createElement",
 	jsxFragment: "Fragment",
 	define,
-	// Required to remove dead-code (e.g. `if (false) { ... }`)
-	minifySyntax: removeDeployCode,
 });
