@@ -45,7 +45,7 @@ function tttChoice(choice: Choice) {
 				title={`Rock Paper Scissors: you chose ${Choice[choice]}`}
 				color={blue()}
 			>
-				My choice is {Choice[botChoice]},{" "}
+				My choice is **{Choice[botChoice]}**,{" "}
 				{determineWinner(choice, botChoice)}
 			</Embed>
 		</Message>
