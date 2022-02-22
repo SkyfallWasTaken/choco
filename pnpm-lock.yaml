@@ -4,6 +4,7 @@ specifiers:
   '@cloudflare/workers-types': ^3.4.0
   concurrently: ^7.0.0
   esbuild: ^0.14.8
+  evaluator.js: ^3.2.4
   exact-math: ^2.2.3
   get-urls: ^11.0.0
   localtunnel: ^2.0.2
@@ -14,6 +15,7 @@ specifiers:
 
 dependencies:
   '@cloudflare/workers-types': 3.4.0
+  evaluator.js: 3.2.4
   exact-math: 2.2.3
   get-urls: 11.0.0
   slshx: 0.3.0
@@ -644,6 +646,10 @@ packages:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
     engines: {node: '>=6'}
     dev: true
+
+  /evaluator.js/3.2.4:
+    resolution: {integrity: sha512-3Ec/fIc5w1oKP+LA0ZhzZ//wkVuwrCz4s7Re6c5VLLu8sHzSSthiv/FFwqOXuwWMy7Iw3oZNvStiXDDk8IAItA==}
+    dev: false
 
   /exact-math/2.2.3:
     resolution: {integrity: sha512-ggSoWm3NUCXlSGvaXsU3l1hWJ9kdbI81tBgwDT/MrLGoN1Y7uX/QmJ6W5aoYGomd5hUWFaDGJdkXrTZdRd4RWw==}
