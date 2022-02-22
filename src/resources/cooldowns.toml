@@ -1,0 +1,14 @@
+[tag]
+create = 60
+update = 60
+delete = 60
+
+[messageCommands]
+expandLinks = 5
+
+# Maths
+prime = 2
+calculate = 3
+
+# Commands that call external APIs
+trivia = 10
