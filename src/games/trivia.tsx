@@ -81,7 +81,9 @@ export function trivia(): CommandHandler<Env> {
 		const trivia = json.results[0];
 
 		const correctAnswer = trivia.correct_answer;
-		const choices = shuffle([correctAnswer, ...trivia.incorrect_answers]);
+		const choices = shuffle([
+			...new Set([correctAnswer, ...trivia.incorrect_answers]),
+		]);
 		const correctAnswerIndex = choices.indexOf(correctAnswer);
 
 		const choiceButtons = [];
