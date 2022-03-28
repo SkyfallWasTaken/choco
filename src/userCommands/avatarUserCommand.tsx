@@ -2,7 +2,6 @@ import {
 	Message,
 	UserCommandHandler,
 	createElement,
-	createHandler,
 	Embed,
 } from "slshx";
 

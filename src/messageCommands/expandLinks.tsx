@@ -1,11 +1,6 @@
 import { MessageCommandHandler, createElement, Message, Fragment } from "slshx";
 import getUrls from "get-urls";
 
-type ExpandedLinkProps = { link: string };
-function ExpandedLink({ link }: ExpandedLinkProps) {
-	return <>{link}</>;
-}
-
 export function expandLinks(): MessageCommandHandler<Env> {
 	return async (_interaction, _env, _ctx, message) => {
 		const urls = getUrls(message.content);
