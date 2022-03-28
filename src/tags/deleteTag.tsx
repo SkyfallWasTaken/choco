@@ -3,14 +3,13 @@ import {
 	useDescription,
 	useString,
 	Message,
-	Button,
 	createElement,
 } from "slshx";
-import fetchUser from "../util/fetchUser";
+import getGuild from "../util/getGuild";
 
 export function deleteTag(): CommandHandler<Env> {
 	useDescription("Deletes a tag");
-	const tagName = useString("name", "The name of the tag", {
+	const tagName = useString("tag", "The name of the tag", {
 		required: true,
 	});
 
@@ -26,7 +25,8 @@ export function deleteTag(): CommandHandler<Env> {
 		const tagObject = JSON.parse(rawTag);
 
 		const userId = interaction.member!.user.id;
-		if (tagObject.author != userId)
+		const ownerId = await getGuild(interaction.guild_id!);
+		if (tagObject.author != (userId || ownerId))
 			return <Message>You don't own this tag!</Message>;
 
 		const file = new File([tagObject.content], "deletedTag.txt", {

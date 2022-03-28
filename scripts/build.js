@@ -16,7 +16,7 @@ const argv = process.argv.slice(2);
 const mode = argv[0];
 const modes = ["development", "deploy", "production"];
 if (!modes.includes(mode)) {
-	throw new Error(`mode must be one of ${modes.join(", ")}`);
+  throw new Error(`mode must be one of ${modes.join(", ")}`);
 }
 const useProductionApplication = mode !== "development";
 const removeDeployCode = mode === "production";
@@ -30,55 +30,55 @@ const applicationSecret = application?.applicationSecret;
 
 // Validate environment
 function assert(name, value, warn = "") {
-	if (value) return;
-	if (!warn) throw new Error(`${name} must be set in env.jsonc`);
-	console.warn(`⚠️ ${name} is not set in env.jsonc. ${warn}`);
+  if (value) return;
+  if (!warn) throw new Error(`${name} must be set in env.jsonc`);
+  console.warn(`⚠️ ${name} is not set in env.jsonc. ${warn}`);
 }
 if (mode === "development") {
-	assert(
-		"testServerId",
-		testServerId,
-		"You must include it to enable automatic reloading of commands."
-	);
-	assert("development.applicationId", applicationId);
-	assert("development.applicationPublicKey", applicationPublicKey);
-	assert("development.applicationSecret", applicationSecret);
+  assert(
+    "testServerId",
+    testServerId,
+    "You must include it to enable automatic reloading of commands."
+  );
+  assert("development.applicationId", applicationId);
+  assert("development.applicationPublicKey", applicationPublicKey);
+  assert("development.applicationSecret", applicationSecret);
 } else if (mode === "deploy") {
-	assert("production.applicationId", applicationId);
-	assert("production.applicationPublicKey", applicationPublicKey);
-	assert("production.applicationSecret", applicationSecret);
+  assert("production.applicationId", applicationId);
+  assert("production.applicationPublicKey", applicationPublicKey);
+  assert("production.applicationSecret", applicationSecret);
 } else if (mode === "production") {
-	assert("production.applicationId", applicationId);
-	assert("production.applicationPublicKey", applicationPublicKey);
+  assert("production.applicationId", applicationId);
+  assert("production.applicationPublicKey", applicationPublicKey);
 }
 
 // Run esbuild
 const define = {
-	SLSHX_APPLICATION_ID: JSON.stringify(applicationId),
-	SLSHX_APPLICATION_PUBLIC_KEY: JSON.stringify(applicationPublicKey),
-	SLSHX_APPLICATION_SECRET: removeDeployCode
-		? "undefined" // Don't publish secret
-		: JSON.stringify(applicationSecret),
-	SLSHX_TEST_SERVER_ID: includeTestServer
-		? JSON.stringify(testServerId)
-		: "undefined",
+  SLSHX_APPLICATION_ID: JSON.stringify(applicationId),
+  SLSHX_APPLICATION_PUBLIC_KEY: JSON.stringify(applicationPublicKey),
+  SLSHX_APPLICATION_SECRET: removeDeployCode
+    ? "undefined" // Don't publish secret
+    : JSON.stringify(applicationSecret),
+  SLSHX_TEST_SERVER_ID: includeTestServer
+    ? JSON.stringify(testServerId)
+    : "undefined",
 };
 if (removeDeployCode) {
-	// Force globalThis.MINIFLARE to be false, so esbuild can remove dead-code
-	define["globalThis.MINIFLARE"] = "false";
+  // Force globalThis.MINIFLARE to be false, so esbuild can remove dead-code
+  define["globalThis.MINIFLARE"] = "false";
 }
 
 await build({
-	entryPoints: ["src/index.tsx"],
-	outExtension: { ".js": ".mjs" },
-	outdir: "dist",
-	target: "esnext",
-	format: "esm",
-	logLevel: "info",
-	bundle: true,
-	sourcemap: true,
-	minify: true,
-	jsxFactory: "createElement",
-	jsxFragment: "Fragment",
-	define,
+  entryPoints: ["src/index.tsx"],
+  outExtension: { ".js": ".mjs" },
+  outdir: "dist",
+  target: "esnext",
+  format: "esm",
+  logLevel: "info",
+  bundle: true,
+  minify: true,
+  sourcemap: true,
+  jsxFactory: "createElement",
+  jsxFragment: "Fragment",
+  define,
 });

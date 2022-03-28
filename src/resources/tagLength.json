@@ -1,0 +1,10 @@
+{
+	"max": {
+		"name": 24,
+		"content": 1024
+	},
+    "min": {
+		"name": 4,
+		"content": 12
+	}
+}

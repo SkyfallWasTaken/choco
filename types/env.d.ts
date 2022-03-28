@@ -5,4 +5,6 @@ interface Env {
 	// SECRET: string;
 
 	BOT_TOKEN: string;
+	BROWSERLESS_TOKEN: string;
+	UNSPLASH_API_KEY: string;
 }

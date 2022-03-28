@@ -10,7 +10,7 @@ import fetchUser from "../util/fetchUser";
 
 export function readTag(): CommandHandler<Env> {
 	useDescription("View a tag");
-	const tagName = useString("name", "The name of the tag", {
+	const tagName = useString("tag", "The name of the tag", {
 		required: true,
 	});
 

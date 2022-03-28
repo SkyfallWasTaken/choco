@@ -12,9 +12,9 @@ import randomEnumValue from "../util/randomEnumValue";
 import { blue } from "../design-system/colors";
 
 enum Choice {
-	Rock,
-	Paper,
-	Scissors,
+	Rock = "Rock",
+	Paper = "Paper",
+	Scissors = "Scissors",
 }
 
 function determineWinner(userChoice: Choice, botChoice: Choice): string {
@@ -37,15 +37,15 @@ function determineWinner(userChoice: Choice, botChoice: Choice): string {
 }
 
 function tttChoice(choice: Choice) {
-	const botChoice = randomEnumValue(Choice);
+	const botChoice = randomEnumValue(Choice)
 
 	return (
 		<Message update>
 			<Embed
-				title={`Rock Paper Scissors: you chose ${Choice[choice]}`}
+				title={`Rock Paper Scissors: you chose ${botChoice}`}
 				color={blue()}
 			>
-				My choice is **{Choice[botChoice]}**,{" "}
+				My choice is **{botChoice}**,{" "}
 				{determineWinner(choice, botChoice)}
 			</Embed>
 		</Message>
@@ -60,7 +60,7 @@ export function rockpaperscissors(): CommandHandler<Env> {
 
 	return () => (
 		<Message>
-			<Embed title="Tic-Tac-Toe" color={blue()}>
+			<Embed title="Rock Paper Scissors" color={blue()}>
 				Choose rock, paper or scissors!
 			</Embed>
 			<Row>

@@ -17,11 +17,13 @@
 
 		"noEmit": true,
 		"strict": true,
+		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"importHelpers": true,
 		"resolveJsonModule": true,
 		"skipLibCheck": true
 	},
-	"include": ["src", "types"]
+	"include": ["src", "types"],
+	"exclude": ["site"]
 }

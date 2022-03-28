@@ -1,7 +1,8 @@
-name = "ninjacord"
+name = "choco"
 type = "javascript"
 
 account_id = "b7624c46ee3377d0b12e2bf893c00685"
+site = {bucket = "./site/dist"}
 workers_dev = true
 
 compatibility_date = "2022-02-06"
@@ -25,8 +26,6 @@ durable_objects_persist = true
 global_async_io = true
 kv_persist = true
 
-[env.development]
-kv_namespaces = [{binding = "TAGS", id = "2e8f02d1471a4bdabae3673e701a069d"}]
-
-[env.production]
-kv_namespaces = [{binding = "TAGS", id = "64a1407445f842ac977d021ec62cf2f5"}]
+[[kv_namespaces]]
+binding = "TAGS"
+id = "64a1407445f842ac977d021ec62cf2f5"

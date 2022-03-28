@@ -8,6 +8,7 @@ import {
 	Input,
 	createElement,
 } from "slshx";
+import tagLengthRequirements from "../resources/tagLength.json"
 
 export function createTag(): CommandHandler<Env> {
 	useDescription("Creates a tag");
@@ -17,6 +18,7 @@ export function createTag(): CommandHandler<Env> {
 	const modalId = useModal<Env>(async (interaction, env) => {
 		const tagName = nameValue.trim().replace(" ", "-");
 		const tagKey = `${interaction.guild_id}::${tagName.toLowerCase()}`;
+
 		if (await env.TAGS.get(tagKey))
 			return <Message>Tag {tagName} already exists!</Message>;
 		try {
@@ -44,16 +46,16 @@ export function createTag(): CommandHandler<Env> {
 				id={nameId}
 				label="Name"
 				required
-				minLength={5}
-				maxLength={12}
+				minLength={tagLengthRequirements.min.name}
+				maxLength={tagLengthRequirements.max.name}
 			/>
 			<Input
 				id={contentId}
 				label="Tag Content"
 				placeholder="Free vbucks: https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 				required
-				minLength={12}
-				maxLength={1000}
+				minLength={tagLengthRequirements.min.content}
+				maxLength={tagLengthRequirements.max.content}
 				paragraph
 			/>
 		</Modal>
