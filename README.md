@@ -1,8 +1,12 @@
-# ⚔️ Slshx Starter Template
-
-This is the starter template for **Slshx**, a library for building strongly-typed
-[Discord commands](https://discord.com/developers/docs/interactions/application-commands)
-that run on [Cloudflare Workers](https://workers.cloudflare.com/), using a
-React-inspired syntax.
-
-See the [Slshx repository](https://github.com/mrbbot/slshx) for setup instructions.
+# Choco
+A small bot, written with Slshx, Typescript and Cloudflare Workers.
+_Note that all commands after this point will use `pnpm` but if you use npm, just replace `pnpm` with `npm`!_
+## Setup
+```
+pnpm install
+```
+Edit `dev.env` and `env.jsonc` with your values and then save.
+```env
+BOT_TOKEN=<discord bot token>
+UNSPLASH_API_KEY=<unsplash access token>
+```
