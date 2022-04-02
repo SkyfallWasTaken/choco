@@ -12,8 +12,10 @@
 		"lint": "eslint **/*.ts"
 	},
 	"dependencies": {
-		"@fusebit/tunnel": "^3.2.5",
 		"@okikio/emitter": "^2.1.7",
+		"@types/figlet": "^1.5.4",
+		"@types/lodash-es": "^4.17.6",
+		"@typescript-eslint/eslint-plugin": "^5.17.0",
 		"color-to-name": "^1.1.0",
 		"evaluator.js": "^3.2.4",
 		"exact-math": "^2.2.3",
@@ -28,12 +30,7 @@
 		"tslib": "^2.3.1"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^3.4.0",
-		"@types/figlet": "^1.5.4",
-		"@types/lodash-es": "^4.17.6",
-		"@typescript-eslint/eslint-plugin": "^5.17.0",
 		"@typescript-eslint/parser": "^5.17.0",
-		"concurrently": "^7.0.0",
 		"esbuild": "^0.14.8",
 		"eslint": "^8.12.0",
 		"eslint-plugin-react": "^7.29.4",
