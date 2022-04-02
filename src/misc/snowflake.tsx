@@ -8,6 +8,7 @@ import {
 } from "slshx";
 import convertSnowflakeToEpoch from "../util/snowflake";
 import { blue } from "../design-system/colors";
+import Error from "../components/Error";
 
 export function snowflake(): CommandHandler<Env> {
 	useDescription("Gets the date from a Discord snowflake.");
@@ -19,8 +20,10 @@ export function snowflake(): CommandHandler<Env> {
 		if (!Number.isInteger(+snowflake)) {
 			return (
 				<Message>
-					That doesn't look like a snowflake. Snowflakes contain only
-					numbers.
+					<Error
+						error="That doesn't look like a snowflake. Snowflakes contain only
+					numbers."
+					></Error>
 				</Message>
 			);
 		}
@@ -28,8 +31,8 @@ export function snowflake(): CommandHandler<Env> {
 		if (snowflakeAsNumber < 4194304) {
 			return (
 				<Message>
-					That doesn't look like a snowflake. Snowflakes are much
-					larger numbers.
+					<Error error="That doesn't look like a snowflake. Snowflakes are much
+					larger numbers."></Error>
 				</Message>
 			);
 		}

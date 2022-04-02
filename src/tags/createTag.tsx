@@ -8,7 +8,8 @@ import {
 	Input,
 	createElement,
 } from "slshx";
-import tagLengthRequirements from "../resources/tagLength.json"
+import tagLengthRequirements from "../resources/tagLength.json";
+import Error from "../components/Error";
 
 export function createTag(): CommandHandler<Env> {
 	useDescription("Creates a tag");
@@ -20,7 +21,11 @@ export function createTag(): CommandHandler<Env> {
 		const tagKey = `${interaction.guild_id}::${tagName.toLowerCase()}`;
 
 		if (await env.TAGS.get(tagKey))
-			return <Message>Tag {tagName} already exists!</Message>;
+			return (
+				<Message>
+					<Error error={`Tag ${tagName} already exists!`}></Error>
+				</Message>
+			);
 		try {
 			await env.TAGS.put(
 				tagKey,
@@ -36,7 +41,11 @@ export function createTag(): CommandHandler<Env> {
 				</Message>
 			);
 		} catch {
-			return <Message>Failed to create tag! Please try again.</Message>;
+			return (
+				<Message>
+					<Error error="Failed to create tag! Please try again."></Error>
+				</Message>
+			);
 		}
 	});
 

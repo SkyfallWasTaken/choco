@@ -8,7 +8,7 @@ import {
 	Row,
 	Button,
 } from "slshx";
-import { blue } from "../design-system/colors";
+import { blue, red } from "../design-system/colors";
 
 export function unsplash(): CommandHandler<Env> {
 	useDescription("Get a random photo from Unsplash.");
@@ -45,7 +45,7 @@ export function unsplash(): CommandHandler<Env> {
 		if (!response.ok)
 			return (
 				<Message>
-					<Embed color={blue()} title="Please try again later">
+					<Embed color={red()} title="Please try again later">
 						It seems that Unsplash's API is ratelimiting the bot,
 						please try again later.
 					</Embed>
@@ -65,18 +65,19 @@ export function unsplash(): CommandHandler<Env> {
 			likes: number;
 			user: {
 				name: string;
+				links: {
+					html: string;
+				};
 			};
 		} = await response.json();
 
 		return (
 			<Message>
-				<Embed
-					image={json.urls.full}
-					footer={`Posted by ${json.user.name} on Unsplash`}
-					color={blue()}
-				>
+				<Embed image={json.urls.full} color={blue()}>
 					**Description:**{" "}
 					{json.description || "_no description provided_"}
+					{"\n\n"}
+					{`Posted by [**${json.user.name}**](${json.user.links.html}) on Unsplash`}
 				</Embed>
 				<Row>
 					<Button id="downloads" disabled primary>

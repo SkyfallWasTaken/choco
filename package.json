@@ -5,11 +5,14 @@
 	"module": "dist/index.mjs",
 	"private": true,
 	"scripts": {
+		"dev": "run-p dev:*",
 		"dev:slshx": "miniflare --watch --debug --wrangler-env=development -e dev.env",
-		"dev:tunnel": "lt --port 8787 --subdomain ninjacord-dev",
-		"deploy:global": "node --no-warnings --experimental-vm-modules scripts/deploy.js"
+		"dev:tunnel": "ssh -R 80:localhost:8787 nokey@localhost.run",
+		"deploy:global": "node --no-warnings --experimental-vm-modules scripts/deploy.js",
+		"lint": "eslint **/*.ts"
 	},
 	"dependencies": {
+		"@fusebit/tunnel": "^3.2.5",
 		"@okikio/emitter": "^2.1.7",
 		"color-to-name": "^1.1.0",
 		"evaluator.js": "^3.2.4",
@@ -17,15 +20,26 @@
 		"expand-hex-code": "^1.2.3",
 		"figlet": "^1.5.2",
 		"get-urls": "^11.0.0",
+		"image-size": "^1.0.1",
+		"jsqr": "^1.4.0",
+		"lodash": "^4.17.21",
+		"lodash-es": "^4.17.21",
 		"slshx": "^0.3.0",
 		"tslib": "^2.3.1"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^3.4.0",
+		"@types/figlet": "^1.5.4",
+		"@types/lodash-es": "^4.17.6",
+		"@typescript-eslint/eslint-plugin": "^5.17.0",
+		"@typescript-eslint/parser": "^5.17.0",
 		"concurrently": "^7.0.0",
 		"esbuild": "^0.14.8",
+		"eslint": "^8.12.0",
+		"eslint-plugin-react": "^7.29.4",
 		"localtunnel": "^2.0.2",
 		"miniflare": "^2.1.0",
+		"npm-run-all": "^4.1.5",
 		"typescript": "^4.5.5"
 	}
 }

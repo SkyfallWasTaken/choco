@@ -4,7 +4,9 @@ import { snowflake } from "./misc/snowflake";
 import { asciiart } from "./misc/asciiart";
 import { urbanLookup, urbanRandom } from "./misc/urban";
 import { wikipediaRandom, wikipediaLookup } from "./misc/wikipedia";
-import { qr } from "./image/qr";
+import {fact} from "./misc/fact"
+import { unsplash } from "./image/unsplash";
+import { qrEncode, qrDecode } from "./image/qr";
 import { createTag } from "./tags/createTag";
 import { readTag } from "./tags/readTag";
 import { deleteTag } from "./tags/deleteTag";
@@ -12,7 +14,6 @@ import { updateTag } from "./tags/updateTag";
 import { calculate } from "./math/calculate";
 import { rockpaperscissors } from "./games/rockpaperscissors";
 import { prime } from "./math/prime";
-import { unsplash } from "./image/unsplash";
 
 export default {
 	calculate,
@@ -26,7 +27,10 @@ export default {
 	},
 	color,
 	screenshot,
-	qr,
+	qr: {
+		encode: qrEncode,
+		decode: qrDecode,
+	},
 	snowflake,
 	unsplash,
 	asciiart,
@@ -38,4 +42,5 @@ export default {
 		lookup: wikipediaLookup,
 		random: wikipediaRandom,
 	},
+	fact
 };

@@ -66,7 +66,7 @@ class Gateway extends EventEmitter {
 	}
 
 	async connect() {
-		let resp = await fetch(
+		const resp = await fetch(
 			`https://${this.#gatewayBot?.url!.substring(6)}?v=9&encoding=json`, // TODO: see if we can use erlpack for speeeeeeed
 			{
 				headers: {
@@ -75,7 +75,7 @@ class Gateway extends EventEmitter {
 			}
 		);
 
-		let ws = resp.webSocket;
+		const ws = resp.webSocket;
 		if (!ws) {
 			throw new Error("Discord server didn't accept WebSocket");
 		}

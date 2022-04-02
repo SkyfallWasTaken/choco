@@ -8,41 +8,43 @@ import {
 	useDescription,
 	Row,
 } from "slshx";
-import randomEnumValue from "../util/randomEnumValue";
+import { random } from "lodash-es";
 import { blue } from "../design-system/colors";
 
 enum Choice {
-	Rock = "Rock",
-	Paper = "Paper",
-	Scissors = "Scissors",
+	Rock,
+	Paper,
+	Scissors,
 }
 
 function determineWinner(userChoice: Choice, botChoice: Choice): string {
 	if (userChoice === botChoice) return "it's a draw!";
 
 	switch (botChoice) {
-		case Choice.Rock: {
-			if (userChoice === Choice.Paper) return "you win!";
-			return "I win!";
-		}
-		case Choice.Paper: {
-			if (userChoice === Choice.Scissors) return "you win!";
-			return "I win!";
-		}
-		case Choice.Scissors: {
-			if (userChoice === Choice.Rock) return "you win!";
-			return "I win!";
-		}
+	case Choice.Rock: {
+		if (userChoice === Choice.Paper) return "you win!";
+		return "I win!";
+	}
+	case Choice.Paper: {
+		if (userChoice === Choice.Scissors) return "you win!";
+		return "I win!";
+	}
+	case Choice.Scissors: {
+		if (userChoice === Choice.Rock) return "you win!";
+		return "I win!";
+	}
 	}
 }
 
 function tttChoice(choice: Choice) {
-	const botChoice = randomEnumValue(Choice)
+	const r = random(1, 3);
+	const botChoice =
+		r === 1 ? Choice.Rock : r === 2 ? Choice.Paper : Choice.Scissors;
 
 	return (
 		<Message update>
 			<Embed
-				title={`Rock Paper Scissors: you chose ${botChoice}`}
+				title={`Rock Paper Scissors: you chose ${choice}`}
 				color={blue()}
 			>
 				My choice is **{botChoice}**,{" "}

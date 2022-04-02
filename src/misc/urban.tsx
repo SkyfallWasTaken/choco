@@ -99,7 +99,7 @@ export function urbanRandom(): CommandHandler<Env> {
 	useDescription("Get a random word from the Urban Dictionary.");
 	return async () => {
 		const response = await fetch(
-			`https://api.urbandictionary.com/v0/random`
+			"https://api.urbandictionary.com/v0/random"
 		);
 		const { list: definitions } = await response.json();
 		const definition: Definition = definitions[0];

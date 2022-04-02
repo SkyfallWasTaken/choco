@@ -4,10 +4,9 @@ import {
 	useString,
 	createElement,
 	Message,
-	Embed,
 } from "slshx";
 import evaluate from "evaluator.js";
-import { red } from "../design-system/colors";
+import Error from "../components/Error";
 
 export function calculate(): CommandHandler<Env> {
 	useDescription("Calculates an expression");
@@ -27,12 +26,7 @@ export function calculate(): CommandHandler<Env> {
 		} catch (err) {
 			return (
 				<Message ephemeral>
-					<Embed
-						title="Failed to calculate expression."
-						color={red()}
-					>
-						{err}
-					</Embed>
+					<Error error={err as string}></Error>
 				</Message>
 			);
 		}

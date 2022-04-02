@@ -8,7 +8,6 @@ const handler = createHandler({
 	applicationPublicKey: SLSHX_APPLICATION_PUBLIC_KEY,
 	applicationSecret: SLSHX_APPLICATION_SECRET,
 	testServerId: SLSHX_TEST_SERVER_ID,
-
 	// Commands
 	commands,
 	userCommands,
@@ -16,5 +15,5 @@ const handler = createHandler({
 });
 
 export default {
-	fetch: handler
+	fetch: handler,
 };

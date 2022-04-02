@@ -7,6 +7,7 @@ import {
 	createElement,
 } from "slshx";
 import fetchUser from "../util/fetchUser";
+import Error from "../components/Error";
 
 export function readTag(): CommandHandler<Env> {
 	useDescription("View a tag");
@@ -20,7 +21,11 @@ export function readTag(): CommandHandler<Env> {
 		);
 
 		if (!rawTag) {
-			return <Message>Tag `{tagName}` does not exist.</Message>;
+			return (
+				<Message>
+					<Error error={`Tag ${tagName} does not exist.`}></Error>
+				</Message>
+			);
 		}
 
 		const tagObject = JSON.parse(rawTag);

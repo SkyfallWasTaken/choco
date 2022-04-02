@@ -6,10 +6,9 @@ import {
 	Message,
 	Embed,
 } from "slshx";
-import { red } from "../design-system/colors";
-import { error } from "../design-system/emojis";
 import expandHexCode from "expand-hex-code";
 import { hexToRGB, findClosestColor } from "color-to-name";
+import Error from "../components/Error";
 
 const HEX_REGEX = /^#([0-9A-F]{3}){1,2}$/i;
 export function color(): CommandHandler<Env> {
@@ -30,7 +29,7 @@ export function color(): CommandHandler<Env> {
 		if (!parsedHex)
 			return (
 				<Message>
-					<Embed color={red()}>{error()} Hex code invalid.</Embed>
+					<Error error="Hex code invalid!"></Error>
 				</Message>
 			);
 		const expandedColor = expandHexCode(normalizedColor);

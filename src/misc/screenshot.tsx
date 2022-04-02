@@ -6,8 +6,8 @@ import {
 	Message,
 	Embed,
 } from "slshx";
-import { blue, red } from "../design-system/colors";
-import { error } from "../design-system/emojis";
+import { blue } from "../design-system/colors";
+import ErrorEmbed from "../components/Error";
 
 type ScreenshotApiResponse = {
 	screenshot: string;
@@ -41,7 +41,7 @@ export function screenshot(): CommandHandler<Env> {
 		} catch (e) {
 			return (
 				<Message>
-					<Embed color={red()}>{error()} ```{e}```</Embed>
+					<ErrorEmbed error={"```" + e + "```"}></ErrorEmbed>
 				</Message>
 			);
 		}

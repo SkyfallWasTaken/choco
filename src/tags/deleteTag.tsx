@@ -6,6 +6,7 @@ import {
 	createElement,
 } from "slshx";
 import getGuild from "../util/getGuild";
+import Error from "../components/Error";
 
 export function deleteTag(): CommandHandler<Env> {
 	useDescription("Deletes a tag");
@@ -19,15 +20,19 @@ export function deleteTag(): CommandHandler<Env> {
 		const rawTag = await env.TAGS.get(tagKey);
 
 		if (!rawTag) {
-			return <Message>Tag `{tagName}` does not exist.</Message>;
+			return (
+				<Message>
+					<Error error={`Tag ${tagName} does not exist.`}></Error>
+				</Message>
+			);
 		}
 
 		const tagObject = JSON.parse(rawTag);
 
 		const userId = interaction.member!.user.id;
-		const ownerId = await getGuild(interaction.guild_id!);
+		const ownerId = await getGuild(interaction.guild_id!, env.BOT_TOKEN);
 		if (tagObject.author != (userId || ownerId))
-			return <Message>You don't own this tag!</Message>;
+			return <Message><Error error="You don't own this tag."></Error></Message>;
 
 		const file = new File([tagObject.content], "deletedTag.txt", {
 			type: "text/plain",

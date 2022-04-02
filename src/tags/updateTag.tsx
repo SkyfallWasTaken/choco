@@ -8,7 +8,8 @@ import {
 	Input,
 	createElement,
 } from "slshx";
-import tagLengthRequirements from "../resources/tagLength.json"
+import tagLengthRequirements from "../resources/tagLength.json";
+import Error from "../components/Error";
 
 export function updateTag(): CommandHandler<Env> {
 	useDescription("Updates a tag");
@@ -19,13 +20,20 @@ export function updateTag(): CommandHandler<Env> {
 		const tagName = nameValue.trim().replace(" ", "-");
 		const tagKey = `${interaction.guild_id}::${tagName.toLowerCase()}`;
 		const rawTag = await env.TAGS.get(tagKey);
-		if (!rawTag) return <Message ephemeral>Tag does not exist!</Message>;
+		if (!rawTag)
+			return (
+				<Message ephemeral>
+					<Error error="Tag does not exist!" />
+				</Message>
+			);
 
 		const tagObject = JSON.parse(rawTag);
 
 		if (tagObject.author != interaction.member!.user.id)
 			return (
-				<Message ephemeral>You are not the owner of this tag!</Message>
+				<Message ephemeral>
+					<Error error="You are not the owner of this tag!"></Error>
+				</Message>
 			);
 
 		tagObject.content = contentValue; // saves an allocation

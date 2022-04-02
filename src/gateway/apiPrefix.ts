@@ -1,1 +1,1 @@
-export default "https://discord.com/api/v9"
+export default "https://discord.com/api/v9";
