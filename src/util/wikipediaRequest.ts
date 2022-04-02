@@ -1,7 +1,7 @@
 const REST_PREFIX = "https://en.wikipedia.org/api/rest_v1";
 const LEGACY_PREFIX = "https://en.wikipedia.org/w/api.php";
 
-export default async function (endpoint: string, legacy: boolean = false) {
+export default async function (endpoint: string, legacy = false) {
 	const url = legacy
 		? `${LEGACY_PREFIX}${endpoint}`
 		: `${REST_PREFIX}${endpoint}`;
@@ -10,6 +10,6 @@ export default async function (endpoint: string, legacy: boolean = false) {
 			"User-Agent": "ChocoBot <mahadkalam1234@gmail.com>",
 		},
 	});
-    if (!response.ok) throw new Error("ratelimit")
+	if (!response.ok) throw new Error("ratelimit");
 	return response;
 }

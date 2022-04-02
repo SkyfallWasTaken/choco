@@ -6,5 +6,5 @@ const schema = {
 }
 const stringify = fastJson(schema as unknown as Schema)*/
 export default function(tagObject: Tag) {
-    return JSON.stringify(tagObject)
+	return JSON.stringify(tagObject);
 }
