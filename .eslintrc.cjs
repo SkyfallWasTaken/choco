@@ -22,10 +22,6 @@ module.exports = {
 	],
 	"ignorePatterns": ["scripts/*"],
 	"rules": {
-		"indent": [
-			"error",
-			"tab"
-		],
 		"linebreak-style": [
 			"error",
 			"windows"
@@ -43,6 +39,6 @@ module.exports = {
 		"react/react-in-jsx-scope": 0,
 		"react/display-name": 0,
 		"react/no-unescaped-entities": 0,
-		"no-unused-vars": ["error", { "vars": "local", "args": "after-used", "ignoreRestSiblings": false, "varsIgnorePattern": "createElement" }]
+		"no-unused-vars": ["error", { "vars": "local", "args": "after-used", "ignoreRestSiblings": false, "varsIgnorePattern": "createElement" }],
 	}
 };
