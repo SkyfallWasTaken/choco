@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@cloudflare/workers-types': ^3.4.0
   '@okikio/emitter': ^2.1.7
   '@types/figlet': ^1.5.4
   '@types/lodash-es': ^4.17.6
@@ -27,6 +28,7 @@ specifiers:
   typescript: ^4.5.5
 
 dependencies:
+  '@cloudflare/workers-types': 3.4.0
   '@okikio/emitter': 2.1.7
   '@types/figlet': 1.5.4
   '@types/lodash-es': 4.17.6
@@ -55,6 +57,10 @@ devDependencies:
   typescript: 4.5.5
 
 packages:
+
+  /@cloudflare/workers-types/3.4.0:
+    resolution: {integrity: sha512-i/3czUrt6YqbOWl44OtIqd0cSZvEVXp/1oD/DZylC4PHZL3q/BhbamdEVeVhc/HPk4iD/7MZ2HGaIMO4Z4b12A==}
+    dev: false
 
   /@eslint/eslintrc/1.2.1:
     resolution: {integrity: sha512-bxvbYnBPN1Gibwyp6NrpnFzA3YtRL3BBAyEAFVIpNTm2Rn4Vy87GA5M4aSn3InRrlsbX5N0GW7XIx+U4SAEKdQ==}
