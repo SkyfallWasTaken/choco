@@ -10,6 +10,6 @@ export default async function (endpoint: string, legacy = false) {
 			"User-Agent": "ChocoBot <mahadkalam1234@gmail.com>",
 		},
 	});
-	if (!response.ok) throw new Error("ratelimit");
+	if (response.status === 429) throw new Error("ratelimit");
 	return response;
 }
