@@ -12,6 +12,7 @@
 		"lint": "eslint **/*.ts"
 	},
 	"dependencies": {
+		"@cloudflare/workers-types": "^3.4.0",
 		"@okikio/emitter": "^2.1.7",
 		"@types/figlet": "^1.5.4",
 		"@types/lodash-es": "^4.17.6",
