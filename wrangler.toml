@@ -2,7 +2,6 @@ name = "choco"
 type = "javascript"
 
 account_id = "b7624c46ee3377d0b12e2bf893c00685"
-site = {bucket = "./site/dist"}
 workers_dev = true
 
 compatibility_date = "2022-02-06"
