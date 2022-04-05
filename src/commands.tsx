@@ -4,7 +4,9 @@ import { snowflake } from "./misc/snowflake";
 import { asciiart } from "./misc/asciiart";
 import { urbanLookup, urbanRandom } from "./misc/urban";
 import { wikipediaRandom, wikipediaLookup } from "./misc/wikipedia";
-import {fact} from "./misc/fact"
+import { fact } from "./misc/fact";
+import { currency } from "./misc/currency";
+import { unshorten } from "./misc/unshorten";
 import { unsplash } from "./image/unsplash";
 import { qrEncode, qrDecode } from "./image/qr";
 import { createTag } from "./tags/createTag";
@@ -42,5 +44,7 @@ export default {
 		lookup: wikipediaLookup,
 		random: wikipediaRandom,
 	},
-	fact
+	fact,
+	currency,
+	unshorten
 };
