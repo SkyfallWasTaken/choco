@@ -1,5 +1,9 @@
 import { build } from "esbuild";
 import { env } from "./env.js";
+import alias from 'esbuild-plugin-alias'
+import { resolve } from "path"
+import { fileURLToPath } from 'url';
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 const argv = process.argv.slice(2);
 
@@ -76,9 +80,14 @@ await build({
 	format: "esm",
 	logLevel: "info",
 	bundle: true,
-	minify: true,
+	minify: useProductionApplication,
 	sourcemap: true,
 	jsxFactory: "createElement",
 	jsxFragment: "Fragment",
 	define,
+	plugins: [
+		alias({
+			'needle': resolve(__dirname, `../shims/needle.js`),
+		}),
+	],
 });
