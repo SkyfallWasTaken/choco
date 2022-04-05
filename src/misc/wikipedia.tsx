@@ -69,7 +69,6 @@ export function wikipediaLookup(): CommandHandler<Env> {
 	const pageName = useString<Env>("page", "The page to look up.", {
 		required: true,
 		async autocomplete() {
-			console.log(1);
 			const searchParams = new URLSearchParams({
 				action: "opensearch",
 				format: "json",
