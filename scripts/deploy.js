@@ -9,18 +9,6 @@ const rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout,
 });
-const question = `⚠️ Are you sure you want to deploy globally?
-This will update the commands in EVERY server your app (${applicationId}) has been added to.
-Changes may take up to an hour to propagate.
-
-Note that Slshx instantly deploys to just your test server whenever you change your code.
-
-(y/N) `;
-const answer = await new Promise((resolve) => {
-	rl.question(question, (answer) => resolve(answer));
-});
-rl.close();
-if (!answer.toLowerCase().startsWith("y")) process.exit(0);
 
 // Start Miniflare to run Worker
 const mf = new Miniflare({
@@ -52,3 +40,4 @@ console.log(
 console.log(
 	green(`[slshx] Add the application to your server here: ${url.toString()}`)
 );
+process.exit(0);
