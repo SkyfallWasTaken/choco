@@ -4,8 +4,7 @@ type = "javascript"
 account_id = "b7624c46ee3377d0b12e2bf893c00685"
 workers_dev = true
 
-compatibility_date = "2022-02-06"
-compatibility_flags = []
+compatibility_date = "2022-04-08"
 
 [build]
 command = "node scripts/build.js production"
