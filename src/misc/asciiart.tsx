@@ -6,7 +6,7 @@ import {
 	Message,
 } from "slshx";
 import * as figlet from "figlet";
-// @ts-ignore The font does exist, but @types/figlet is out-of-date
+// @ts-expect-error The font does exist, but @types/figlet is out-of-date
 import standard from "figlet/importable-fonts/Standard";
 
 export function asciiart(): CommandHandler<Env> {

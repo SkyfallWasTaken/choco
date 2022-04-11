@@ -69,7 +69,7 @@ export function wikipediaLookup(): CommandHandler<Env> {
 	const pageName = useString<Env>("page", "The page to look up.", {
 		required: true,
 		async autocomplete() {
-			const searchParams = new URLSearchParams({
+			const searchParameters = new URLSearchParams({
 				action: "opensearch",
 				format: "json",
 				formatversion: "2",
@@ -77,7 +77,7 @@ export function wikipediaLookup(): CommandHandler<Env> {
 				namespace: "0",
 				limit: "5",
 			});
-			const search = await fetchWikipedia(`?${searchParams}`, true);
+			const search = await fetchWikipedia(`?${searchParameters}`, true);
 			const searchResult: string[] = ((await search.json()) as Search)[1];
 
 			return searchResult;
@@ -87,15 +87,17 @@ export function wikipediaLookup(): CommandHandler<Env> {
 	return async function* () {
 		yield;
 		const page = await fetchWikipedia(
-			`/page/summary/${encodeURIComponent(pageName)}?redirect=false`
+			`/page/summary/${encodeURIComponent(pageName)}?redirect=false`,
 		);
 		const pageData: PageSummary = await page.json();
-		if (page.status === 404)
+		if (page.status === 404) {
 			return (
 				<Message>
 					<Error error={`Page ${pageName} not found.`}></Error>
 				</Message>
 			);
+		}
+
 		if (pageData.type != "standard") {
 			return (
 				<Message>

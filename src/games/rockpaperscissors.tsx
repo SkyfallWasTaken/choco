@@ -11,7 +11,6 @@ import {
 import { sample } from "lodash-es";
 import { blue } from "../design-system/colors";
 
-/* eslint-disable */
 enum Choice {
 	Rock = "✊ Rock",
 	Paper = "✋ Paper",
@@ -20,30 +19,39 @@ enum Choice {
 /* eslint-enable */
 
 function determineWinner(userChoice: Choice, botChoice: Choice): string {
-	if (userChoice === botChoice) return "it's a draw!";
+	if (userChoice === botChoice) {
+		return "it's a draw!";
+	}
 
 	switch (botChoice) {
 		case Choice.Rock: {
-			if (userChoice === Choice.Paper) return "you win!";
+			if (userChoice === Choice.Paper) {
+				return "you win!";
+			}
+
 			return "I win!";
 		}
+
 		case Choice.Paper: {
-			if (userChoice === Choice.Scissors) return "you win!";
+			if (userChoice === Choice.Scissors) {
+				return "you win!";
+			}
+
 			return "I win!";
 		}
+
 		case Choice.Scissors: {
-			if (userChoice === Choice.Rock) return "you win!";
+			if (userChoice === Choice.Rock) {
+				return "you win!";
+			}
+
 			return "I win!";
 		}
 	}
 }
 
 function tttChoice(choice: Choice) {
-	const botChoice = sample([
-		Choice.Rock,
-		Choice.Paper,
-		Choice.Scissors,
-	]) as Choice;
+	const botChoice = sample([Choice.Rock, Choice.Paper, Choice.Scissors])!;
 
 	return (
 		<Message update>

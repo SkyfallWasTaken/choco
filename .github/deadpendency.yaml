@@ -1,9 +1,9 @@
 ignore-failures:
     javascript:
-      - slshx
-      - color-to-name
-      - expand-hex-code
-      - npm-run-all
-      - esbuild
-      - lodash-es
-      - evaluator.js
+        - slshx
+        - color-to-name
+        - expand-hex-code
+        - npm-run-all
+        - esbuild
+        - lodash-es
+        - evaluator.js

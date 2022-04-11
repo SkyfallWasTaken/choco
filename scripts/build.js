@@ -1,9 +1,11 @@
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import process from "node:process";
 import { build } from "esbuild";
+import alias from "esbuild-plugin-alias";
 import { env } from "./env.js";
-import alias from 'esbuild-plugin-alias'
-import { resolve } from "path"
-import { fileURLToPath } from 'url';
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 const argv = process.argv.slice(2);
 
@@ -22,47 +24,68 @@ const modes = ["development", "deploy", "production"];
 if (!modes.includes(mode)) {
 	throw new Error(`mode must be one of ${modes.join(", ")}`);
 }
-const useProductionApplication = mode !== "development";
+
+const useProductionApp = mode !== "development";
 const removeDeployCode = mode === "production";
 const includeTestServer = mode === "development";
 
 const testServerId = env.testServerId;
-const application = useProductionApplication ? env.production : env.development;
-const applicationId = application?.applicationId;
-const applicationPublicKey = application?.applicationPublicKey;
-const applicationSecret = application?.applicationSecret;
+const app = useProductionApp ? env.production : env.development;
+const appId = app?.applicationId;
+const appPublicKey = app?.applicationPublicKey;
+const appSecret = app?.applicationSecret;
 
 // Validate environment
 function assert(name, value, warn = "") {
-	if (value) return;
-	if (!warn) throw new Error(`${name} must be set in env.jsonc`);
+	if (value) {
+		return;
+	}
+
+	if (!warn) {
+		throw new Error(`${name} must be set in env.jsonc`);
+	}
+
 	console.warn(`⚠️ ${name} is not set in env.jsonc. ${warn}`);
 }
-if (mode === "development") {
-	assert(
-		"testServerId",
-		testServerId,
-		"You must include it to enable automatic reloading of commands."
-	);
-	assert("development.applicationId", applicationId);
-	assert("development.applicationPublicKey", applicationPublicKey);
-	assert("development.applicationSecret", applicationSecret);
-} else if (mode === "deploy") {
-	assert("production.applicationId", applicationId);
-	assert("production.applicationPublicKey", applicationPublicKey);
-	assert("production.applicationSecret", applicationSecret);
-} else if (mode === "production") {
-	assert("production.applicationId", applicationId);
-	assert("production.applicationPublicKey", applicationPublicKey);
+
+switch (mode) {
+	case "development": {
+		assert(
+			"testServerId",
+			testServerId,
+			"You must include it to enable automatic reloading of commands.",
+		);
+		assert("development.applicationId", appId);
+		assert("development.applicationPublicKey", appPublicKey);
+		assert("development.applicationSecret", appSecret);
+
+		break;
+	}
+
+	case "deploy": {
+		assert("production.applicationId", appId);
+		assert("production.applicationPublicKey", appPublicKey);
+		assert("production.applicationSecret", appSecret);
+
+		break;
+	}
+
+	case "production": {
+		assert("production.applicationId", appId);
+		assert("production.applicationPublicKey", appPublicKey);
+
+		break;
+	}
+	// No default
 }
 
 // Run esbuild
 const define = {
-	SLSHX_APPLICATION_ID: JSON.stringify(applicationId),
-	SLSHX_APPLICATION_PUBLIC_KEY: JSON.stringify(applicationPublicKey),
+	SLSHX_APPLICATION_ID: JSON.stringify(appId),
+	SLSHX_APPLICATION_PUBLIC_KEY: JSON.stringify(appPublicKey),
 	SLSHX_APPLICATION_SECRET: removeDeployCode
 		? "undefined" // Don't publish secret
-		: JSON.stringify(applicationSecret),
+		: JSON.stringify(appSecret),
 	SLSHX_TEST_SERVER_ID: includeTestServer
 		? JSON.stringify(testServerId)
 		: "undefined",
@@ -80,14 +103,18 @@ await build({
 	format: "esm",
 	logLevel: "info",
 	bundle: true,
-	minify: useProductionApplication,
+	minify: useProductionApp,
 	sourcemap: true,
 	jsxFactory: "createElement",
 	jsxFragment: "Fragment",
 	define,
 	plugins: [
 		alias({
-			'needle': resolve(__dirname, `../shims/needle.js`),
+			needle: resolve(__dirname, "../shims/needle.js"),
+			"node-fetch": resolve(__dirname, "../shims/nodeFetch.js"),
+			fs: resolve(__dirname, "../shims/nothing.js"),
+			got: resolve(__dirname, "../shims/got.js"),
+			querystring: resolve(__dirname, "../shims/querystring.js"),
 		}),
 	],
 });

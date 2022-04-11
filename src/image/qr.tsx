@@ -17,17 +17,17 @@ export function qrEncode(): CommandHandler<Env> {
 		"The text/URL to be encoded into a QR code.",
 		{
 			required: true,
-		}
+		},
 	);
 
-	return async function (_, env) {
+	return async function () {
 		return (
 			<Message>
 				<Embed
 					color={blue()}
 					title="QR Code"
 					image={`https://chart.googleapis.com/chart?chs=400x400&cht=qr&chl=${encodeURIComponent(
-						text
+						text,
 					)}`}
 				>
 					Scan the QR code using your phone or the `/qr decode`
@@ -39,7 +39,7 @@ export function qrEncode(): CommandHandler<Env> {
 }
 
 type QRDecodeResponse = [
-	{ type: string; symbol: [{ seq: number; data?: string; error?: string }] }
+	{ type: string; symbol: [{ seq: number; data?: string; error?: string }] },
 ];
 
 export function qrDecode(): CommandHandler<Env> {
@@ -48,26 +48,30 @@ export function qrDecode(): CommandHandler<Env> {
 		required: true,
 	});
 
-	return async function* (_, env) {
+	return async function* () {
 		yield;
-		if (qr.content_type != ("image/png" || "image/jpeg"))
+		if (qr.content_type != ("image/png" || "image/jpeg")) {
 			return (
 				<Message>
 					<Error error="Please send an image to scan for QR codes."></Error>
 				</Message>
 			);
-		const params = new URLSearchParams({ fileurl: qr.proxy_url });
+		}
+
+		const parameters = new URLSearchParams({ fileurl: qr.proxy_url });
 		const response = await fetch(
-			`http://api.qrserver.com/v1/read-qr-code/?${params}`
+			`http://api.qrserver.com/v1/read-qr-code/?${parameters}`,
 		);
 		const data: QRDecodeResponse = await response.json();
 		const symbol = data[0].symbol[0];
-		if (!symbol.data)
+		if (!symbol.data) {
 			return (
 				<Message>
 					<Error error="Could not find a QR code in that image."></Error>
 				</Message>
 			);
+		}
+
 		return (
 			<Message>
 				<Embed color={blue()} title="QR Code decoded!">

@@ -22,18 +22,18 @@ type Definition = {
 	thumbs_down: number;
 	word: string;
 };
-const LINK_REGEX = /\[([^\]]+)\]/g;
-const SQUARE_BRACKET_REGEX = /\[|\]/g;
-const linkToFormatted = (s: string) => {
-	return trim(
+const LINK_REGEX = /\[([^\]]+)]/g;
+const SQUARE_BRACKET_REGEX = /\[]/g;
+const linkToFormatted = (s: string) =>
+	trim(
 		s.replace(LINK_REGEX, (match) => {
 			const word = match.replace(SQUARE_BRACKET_REGEX, "");
-			const params = new URLSearchParams({ term: word });
-			return `[**${word}**](https://urbandictionary.com/define.php?${params})`;
+			const parameters = new URLSearchParams({ term: word });
+			return `[**${word}**](https://urbandictionary.com/define.php?${parameters})`;
 		}),
-		1024
+		1024,
 	);
-};
+
 function DefinitionEmbed({
 	definition,
 	permalink,
@@ -81,10 +81,13 @@ export function urbanLookup(): CommandHandler<Env> {
 				cf: {
 					cacheTtl: 100,
 				},
-			}
+			},
 		);
 		const { list: definitions } = await response.json();
-		if (!definitions.length) return <Message>No result found.</Message>;
+		if (definitions.length === 0) {
+			return <Message>No result found.</Message>;
+		}
+
 		const definition: Definition = definitions[0];
 
 		return (
@@ -99,7 +102,7 @@ export function urbanRandom(): CommandHandler<Env> {
 	useDescription("Get a random word from the Urban Dictionary.");
 	return async () => {
 		const response = await fetch(
-			"https://api.urbandictionary.com/v0/random"
+			"https://api.urbandictionary.com/v0/random",
 		);
 		const { list: definitions } = await response.json();
 		const definition: Definition = definitions[0];

@@ -23,10 +23,10 @@ export function calculate(): CommandHandler<Env> {
 					```
 				</Message>
 			);
-		} catch (err) {
+		} catch (error) {
 			return (
 				<Message ephemeral>
-					<Error error={err as string}></Error>
+					<Error error={error as string}></Error>
 				</Message>
 			);
 		}

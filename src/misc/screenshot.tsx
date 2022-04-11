@@ -4,14 +4,9 @@ import {
 	useString,
 	createElement,
 	Message,
-	Embed,
 } from "slshx";
-import { blue } from "../design-system/colors";
-import ErrorEmbed from "../components/Error";
-
-type ScreenshotApiResponse = {
-	screenshot: string;
-};
+import Error from "../components/Error";
+import isNsfw from "../util/isNsfw";
 
 export function screenshot(): CommandHandler<Env> {
 	useDescription("Screenshots a page.");
@@ -19,31 +14,40 @@ export function screenshot(): CommandHandler<Env> {
 		required: true,
 	});
 
-	return async function* (_, env) {
+	return async function* () {
 		yield;
-		try {
-			const normalizedUrl = encodeURI(url);
-			const response = await fetch(
-				`https://shot.screenshotapi.net/screenshot?&url=${normalizedUrl}&output=image&file_type=png&block_ads=true&no_cookie_banners=true&wait_for_event=load`
-			);
-			const data: any = await response.json();
-			if (data.error) throw new Error("response not ok");
+		const imageUrl = `https://s0.wp.com/mshots/v1/${url}`;
+		await fetch(imageUrl); // Get the image to load
+		const response = await fetch(imageUrl, {
+			headers: {
+				"User-Agent": "Mozilla/5.0 (Windows; U; Windows)",
+			},
+		});
+		const blob = await response.blob();
+		const file = new File([blob], "screenshot.jpg", {
+			type: "image/jpeg",
+		});
 
+		const isScreenshotNsfw = await isNsfw(file);
+		const data: { success: boolean; nsfw: boolean } =
+			await isScreenshotNsfw.json();
+
+		if (!data.success) {
 			return (
 				<Message>
-					<Embed
-						color={blue()}
-						title={normalizedUrl}
-						image={response.url}
-					/>
-				</Message>
-			);
-		} catch (e) {
-			return (
-				<Message>
-					<ErrorEmbed error={"```" + e + "```"}></ErrorEmbed>
+					<Error error="Failed to detect if screenshot is NSFW, please try again."></Error>
 				</Message>
 			);
 		}
+
+		if (data.nsfw) {
+			return (
+				<Message>
+					<Error error="This screenshot was detected as NSFW."></Error>
+				</Message>
+			);
+		}
+
+		return <Message attachments={[file]} />;
 	};
 }

@@ -1,0 +1,1 @@
+-   /screenshot - Add NSFW image detection

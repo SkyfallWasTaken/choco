@@ -8,6 +8,7 @@ import {
 } from "slshx";
 import fetchUser from "../util/fetchUser";
 import Error from "../components/Error";
+import RequiredInGuild from "../components/RequiredInGuild";
 
 export function readTag(): CommandHandler<Env> {
 	useDescription("View a tag");
@@ -16,8 +17,16 @@ export function readTag(): CommandHandler<Env> {
 	});
 
 	return async (interaction, env) => {
+		if (!interaction.guild_id) {
+			return (
+				<Message>
+					<RequiredInGuild name="tag view" />
+				</Message>
+			);
+		}
+
 		const rawTag = await env.TAGS.get(
-			`${interaction.guild_id}::${tagName.toLowerCase()}`
+			`${interaction.guild_id}::${tagName.toLowerCase()}`,
 		);
 
 		if (!rawTag) {
@@ -31,8 +40,8 @@ export function readTag(): CommandHandler<Env> {
 		const tagObject = JSON.parse(rawTag);
 
 		const { username, discriminator } = await fetchUser(
-			interaction.member!.user.id,
-			env.BOT_TOKEN
+			interaction.member?.user.id!,
+			env.BOT_TOKEN,
 		);
 		return (
 			<Message allowedMentions={{ parse: [] }}>

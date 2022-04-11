@@ -7,6 +7,9 @@ export default async function (id: string, token: string): Promise<APIUser> {
 		},
 	});
 
-	if (!response.ok) throw new Error(`Error status code: ${response.status}`);
-	return await response.json();
+	if (!response.ok) {
+		throw new Error(`Error status code: ${response.status}`);
+	}
+
+	return response.json();
 }

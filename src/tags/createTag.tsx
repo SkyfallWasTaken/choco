@@ -10,6 +10,7 @@ import {
 } from "slshx";
 import tagLengthRequirements from "../resources/tagLength.json";
 import Error from "../components/Error";
+import RequiredInGuild from "../components/RequiredInGuild";
 
 export function createTag(): CommandHandler<Env> {
 	useDescription("Creates a tag");
@@ -17,22 +18,32 @@ export function createTag(): CommandHandler<Env> {
 	const [contentId, contentValue] = useInput();
 
 	const modalId = useModal<Env>(async (interaction, env) => {
-		const tagName = nameValue.trim().replace(" ", "-");
+		if (!interaction.guild_id) {
+			return (
+				<Message>
+					<RequiredInGuild name="tag create" />
+				</Message>
+			);
+		}
+
+		const tagName = nameValue.trim().replaceAll(" ", "-");
 		const tagKey = `${interaction.guild_id}::${tagName.toLowerCase()}`;
 
-		if (await env.TAGS.get(tagKey))
+		if (await env.TAGS.get(tagKey)) {
 			return (
 				<Message>
 					<Error error={`Tag ${tagName} already exists!`}></Error>
 				</Message>
 			);
+		}
+
 		try {
 			await env.TAGS.put(
 				tagKey,
 				JSON.stringify({
 					content: contentValue,
 					author: interaction.member!.user.id,
-				})
+				}),
 			);
 			return (
 				<Message>

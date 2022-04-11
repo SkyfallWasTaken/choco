@@ -14,9 +14,16 @@ import Error from "../components/Error";
 import { blue } from "../design-system/colors";
 import currencies from "../resources/currencies.json";
 
-function autocompleteCurrency(currency: string): string[] {
+function autocompleteCurrency(currency: string) {
+	if ([...currencies].length === 0) {
+		return currencies.slice(0, 10);
+	}
+
 	return currencies
-		.filter((v) => v.startsWith(currency.toUpperCase()))
+		.filter((v) => {
+			const name = v.name.toLowerCase();
+			return name.includes(currency.toLowerCase());
+		})
 		.slice(0, 10);
 }
 
@@ -34,7 +41,7 @@ export function currency(): CommandHandler<Env> {
 			async autocomplete() {
 				return autocompleteCurrency(currencyFrom);
 			},
-		}
+		},
 	);
 	const currencyTo: string = useString<Env>("to", "Currency to convert to.", {
 		required: true,
@@ -54,10 +61,10 @@ export function currency(): CommandHandler<Env> {
 					<Embed
 						color={blue()}
 						title={`${conversion["from-currency-symbol"]} to ${conversion["to-currency-symbol"]}`}
-						footer="Use of this service is subject to the terms of use at http://www.xe.com/legal/. • Powered by DuckDuckGo"
+						footer="Powered by XE.com and DuckDuckGo"
 					>
 						**{conversion["from-amount"]}{" "}
-						{conversion["from-currency-symbol"]}** = {" "}
+						{conversion["from-currency-symbol"]}** ={" "}
 						{conversion["converted-amount"]}{" "}
 						{conversion["to-currency-symbol"]}
 						<Field inline name="Exchange rate">
@@ -66,10 +73,12 @@ export function currency(): CommandHandler<Env> {
 					</Embed>
 				</Message>
 			);
-		} catch (e) {
+		} catch (error) {
 			return (
 				<Message>
-					<Error error={(e as string).toString().slice(13)}></Error>
+					<Error
+						error={(error as string).toString().slice(13)}
+					></Error>
 				</Message>
 			);
 		}

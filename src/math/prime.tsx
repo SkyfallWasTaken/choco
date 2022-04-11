@@ -16,7 +16,7 @@ export function prime(): CommandHandler<Env> {
 			required: true,
 			min: 1,
 			max: 500,
-		}
+		},
 	);
 
 	return async () => <Message>```{primes[n - 1]}```</Message>;

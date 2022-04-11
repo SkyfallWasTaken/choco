@@ -10,6 +10,8 @@ import {
 } from "slshx";
 import tagLengthRequirements from "../resources/tagLength.json";
 import Error from "../components/Error";
+import Success from "../components/Success";
+import RequiredInGuild from "../components/RequiredInGuild";
 
 export function updateTag(): CommandHandler<Env> {
 	useDescription("Updates a tag");
@@ -17,32 +19,44 @@ export function updateTag(): CommandHandler<Env> {
 	const [contentId, contentValue] = useInput();
 
 	const modalId = useModal<Env>(async (interaction, env) => {
-		const tagName = nameValue.trim().replace(" ", "-");
+		if (!interaction.guild_id) {
+			return (
+				<Message>
+					<RequiredInGuild name="tag update" />
+				</Message>
+			);
+		}
+
+		const tagName = nameValue.trim().replaceAll(" ", "-");
 		const tagKey = `${interaction.guild_id}::${tagName.toLowerCase()}`;
 		const rawTag = await env.TAGS.get(tagKey);
-		if (!rawTag)
+		if (!rawTag) {
 			return (
 				<Message ephemeral>
 					<Error error="Tag does not exist!" />
 				</Message>
 			);
+		}
 
 		const tagObject = JSON.parse(rawTag);
 
-		if (tagObject.author != interaction.member!.user.id)
+		if (tagObject.author != interaction.member!.user.id) {
 			return (
 				<Message ephemeral>
 					<Error error="You are not the owner of this tag!"></Error>
 				</Message>
 			);
+		}
 
-		tagObject.content = contentValue; // saves an allocation
+		tagObject.content = contentValue; // Saves an allocation
 
 		await env.TAGS.put(tagKey, JSON.stringify(tagObject));
 
-		return () => {
-			<Message>Updated tag!</Message>;
-		};
+		return (
+			<Message>
+				<Success message="Successfully updated tag!"></Success>
+			</Message>
+		);
 	});
 
 	return () => (

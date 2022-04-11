@@ -14,7 +14,7 @@ export function unsplash(): CommandHandler<Env> {
 	useDescription("Get a random photo from Unsplash.");
 	const query = useString(
 		"query",
-		"The name of the image that you want to get (e.g. sunset)"
+		"The name of the image that you want to get (e.g. sunset)",
 	);
 	const orientation = useString(
 		"orientation",
@@ -25,24 +25,29 @@ export function unsplash(): CommandHandler<Env> {
 				{ name: "Landscape", value: "landscape" },
 				{ name: "Squarish", value: "squarish" },
 			] as const,
-		}
+		},
 	);
 
 	return async (_, env) => {
-		const params = new URLSearchParams();
-		if (query) params.set("query", query);
-		if (orientation) params.set("orientation", orientation);
+		const parameters = new URLSearchParams();
+		if (query) {
+			parameters.set("query", query);
+		}
+
+		if (orientation) {
+			parameters.set("orientation", orientation);
+		}
 
 		const response = await fetch(
-			`https://api.unsplash.com/photos/random?${params.toString()}`,
+			`https://api.unsplash.com/photos/random?${parameters.toString()}`,
 			{
 				headers: {
 					Authorization: `Client-ID ${env.UNSPLASH_API_KEY}`,
 				},
-			}
+			},
 		);
 
-		if (!response.ok)
+		if (!response.ok) {
 			return (
 				<Message>
 					<Embed color={red()} title="Please try again later">
@@ -51,6 +56,7 @@ export function unsplash(): CommandHandler<Env> {
 					</Embed>
 				</Message>
 			);
+		}
 
 		const json: {
 			urls: {

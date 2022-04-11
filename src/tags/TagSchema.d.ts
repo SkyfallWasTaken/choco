@@ -1,4 +1,4 @@
 interface Tag {
-    content: string;
-    author: string;
+	content: string;
+	author: string;
 }

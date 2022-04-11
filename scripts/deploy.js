@@ -1,8 +1,8 @@
-import readline from "readline";
+import readline from "node:readline";
 import { Miniflare, Log, LogLevel } from "miniflare";
 import { env } from "./env.js";
 
-const applicationId = env.production.applicationId;
+const appId = env.production.applicationId;
 
 // Confirm deployment with prompt
 const rl = readline.createInterface({
@@ -29,15 +29,17 @@ await mf.dispatchFetch("http://localhost:8787/?slshx_action=deploy", {
 
 // Build the authorize URL
 const url = new URL("https://discord.com/api/oauth2/authorize");
-url.searchParams.set("client_id", applicationId);
+url.searchParams.set("client_id", appId);
 url.searchParams.set("scope", "applications.commands");
 
 // Log success
-const green = (s) => `\x1b[32m${s}\x1b[39m`;
+const green = (s) => `\u001B[32m${s}\u001B[39m`;
 console.log(
-	green("[slshx] Deployed! ✅  (changes may take up to an hour to propagate)")
+	green(
+		"[slshx] Deployed! ✅  (changes may take up to an hour to propagate)",
+	),
 );
 console.log(
-	green(`[slshx] Add the application to your server here: ${url.toString()}`)
+	green(`[slshx] Add the application to your server here: ${url.toString()}`),
 );
 process.exit(0);

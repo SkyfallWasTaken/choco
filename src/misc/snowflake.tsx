@@ -17,7 +17,7 @@ export function snowflake(): CommandHandler<Env> {
 	});
 
 	return async () => {
-		if (!Number.isInteger(+snowflake)) {
+		if (!Number.isInteger(Number(snowflake))) {
 			return (
 				<Message>
 					<Error
@@ -27,15 +27,19 @@ export function snowflake(): CommandHandler<Env> {
 				</Message>
 			);
 		}
+
 		const snowflakeAsNumber = BigInt(snowflake);
-		if (snowflakeAsNumber < 4194304) {
+		if (snowflakeAsNumber < 4_194_304) {
 			return (
 				<Message>
-					<Error error="That doesn't look like a snowflake. Snowflakes are much
-					larger numbers."></Error>
+					<Error
+						error="That doesn't look like a snowflake. Snowflakes are much
+					larger numbers."
+					></Error>
 				</Message>
 			);
 		}
+
 		const epoch = convertSnowflakeToEpoch(snowflakeAsNumber.toString());
 		return (
 			<Message>

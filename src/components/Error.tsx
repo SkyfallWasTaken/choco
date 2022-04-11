@@ -1,4 +1,4 @@
-import { Embed, createElement, } from "slshx";
+import { Embed, createElement } from "slshx";
 import { red } from "../design-system/colors";
 import { error as errorEmoji } from "../design-system/emojis";
 
