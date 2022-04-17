@@ -1,4 +1,5 @@
 # Choco
+[![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://vshymanskyy.github.io/StandWithUkraine)
 A small bot, written with Slshx, Typescript and Cloudflare Workers.
 _Note that all commands after this point will use `pnpm` but if you use npm, just replace `pnpm` with `npm`!_
 ## Setup
